@@ -12,13 +12,15 @@ class Sidebar {
     this.initToggleButton();
   }
 
-  /**
-   * Отвечает за скрытие/показа боковой колонки:
-   * переключает два класса для body: sidebar-open и sidebar-collapse
-   * при нажатии на кнопку .sidebar-toggle
-   * */
   static initToggleButton() {
+    let body = document.getElementsByTagName('body').item(0);
+    let toggleButton = document.getElementsByClassName('sidebar-toggle').item(0);
 
+    toggleButton.addEventListener('click', function() {
+      body.classList.toggle('sidebar-open');
+      body.classList.toggle('sidebar-collapse');
+      return false;
+    })
   }
 
   /**
@@ -29,7 +31,27 @@ class Sidebar {
    * выходу устанавливает App.setState( 'init' )
    * */
   static initAuthLinks() {
+    let signUpButton = document.getElementsByClassName('menu-item_register').item(0);
+    signUpButton.addEventListener('click', function() {
+      App.getModal('register').open();
+      return false;
+    });
 
+    let signInButton = document.getElementsByClassName('menu-item_login').item(0);
+    signInButton.addEventListener('click', function() {
+      App.getModal('login').open();
+      return false;
+    });
+
+    let logoutButton = document.getElementsByClassName('menu-item_logout').item(0);
+    logoutButton.addEventListener('click', function() {
+      User.logout(User.current(), function(err, response) {
+        if (response.success) {
+          App.setState('init');
+        }
+      });
+      return false;
+    });
   }
 
 }
