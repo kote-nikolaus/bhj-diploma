@@ -18,8 +18,8 @@ class AccountsWidget {
       throw constructorError;
     } else {
       this.element = element;
-      this.registerEvents();
       this.update();
+      this.registerEvents();
     }
   }
 
@@ -35,11 +35,6 @@ class AccountsWidget {
     createAccountButton.addEventListener('click', function() {
       App.getModal('createAccount').open();
     });
-
-    let accounts = Array.from(document.getElementsByClassName('account'));
-    for (let account of accounts) {
-      account.addEventListener('click', e => this.onSelectAccount(e));
-    };
   }
 
   /**
@@ -54,7 +49,7 @@ class AccountsWidget {
    * */
   update() {
     let that = this;
-    if (User.current() !== 'undefined') {
+    if (User.current() !== undefined) {
       Account.list(User.current(), function(err, response) {
         if (response.success) {
           that.clear();
@@ -88,7 +83,9 @@ class AccountsWidget {
     if (element.classList.contains('active')) {
       element.classList.remove('active');
     } else {
-      activeAccount.classList.remove('active');
+      if (activeAccount) {
+        activeAccount.classList.remove('active');
+      }
       element.classList.add('active');
     }
     App.showPage('transactions', {account_id: element.dataset.id});
@@ -101,7 +98,7 @@ class AccountsWidget {
    * */
   getAccountHTML(item) {
     let newAccount = document.createElement('li');
-    newAccount.className = 'active account';
+    newAccount.className = 'account';
     newAccount.dataset.id = item.id;
     newAccount.innerHTML = `<a href="#"><span>${item.name}</span> <span>${item.sum} ₽</span></a>`;
     return newAccount;
@@ -114,9 +111,15 @@ class AccountsWidget {
    * и добавляет его внутрь элемента виджета
    * */
   renderItem(item) {
-    console.log(item)
     for (let i = 0; i < item.length; i++) {
       this.element.appendChild(this.getAccountHTML(item[i]));
     }
+
+    let accounts = Array.from(document.getElementsByClassName('account'));
+    for (let i = 0; i < accounts.length; i++) {
+      let that = this;
+      accounts[i].addEventListener('click', function(e) {that.onSelectAccount(this)});
+    };
+
   }
 }
