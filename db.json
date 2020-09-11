@@ -390,6 +390,22 @@
       "sum": 300000,
       "type": "expense",
       "user_id": "1"
+    },
+    {
+      "id": "f9o9r45qgkexbtg2l",
+      "type": "INCOME",
+      "name": "зарплата",
+      "sum": 25000,
+      "account_id": "f9o9r4ekgkeunpzbx",
+      "created_at": "2020-09-10T21:31:08.060Z"
+    },
+    {
+      "id": "f9o9r494skexbtucz",
+      "type": "EXPENSE",
+      "name": "еда",
+      "sum": 3000,
+      "account_id": "f9o9r4ekgkeunpzbx",
+      "created_at": "2020-09-10T21:31:26.578Z"
     }
   ]
 }

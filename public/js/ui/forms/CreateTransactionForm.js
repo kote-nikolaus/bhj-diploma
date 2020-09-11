@@ -19,12 +19,12 @@ class CreateTransactionForm extends AsyncForm {
    * */
   renderAccountsList() {
     if (User.current() !== undefined) {
+      let that = this;
       Account.list(User.current(), function(err, response) {
         if (response.success) {
-          let accountsList = document.getElementById('expense-accounts-list');
-          //let incomeAccountsList = document.getElementById('income-accounts-list');
+          let accountsList = that.element.closest('.modal').querySelector('.accounts-select');
           for (let i = 0; i < response.data.length; i++) {
-            let account = document.createElement('option');
+          let account = document.createElement('option');
             account.value = response.data[i].id;
             account.innerHTML = response.data[i].name;
             accountsList.appendChild(account);
@@ -41,6 +41,14 @@ class CreateTransactionForm extends AsyncForm {
    * в котором находится форма
    * */
   onSubmit(options) {
-
+    let that = this;
+    Transaction.create(options.data, function(err, response) {
+      if (response.success) {
+        that.element.reset();
+        let modalName = that.element.closest("[class='modal fade in']").dataset.modalId;
+        App.getModal(modalName).close();
+        App.update();
+      }
+    })
   }
 }
