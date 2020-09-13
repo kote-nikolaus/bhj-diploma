@@ -2,7 +2,7 @@
  * Класс Entity - базовый для взаимодействия с сервером.
  * Имеет свойство URL, равно пустой строке.
  * */
-class Entity {  
+class Entity {
     static URL = '';
 
   /**
@@ -40,9 +40,9 @@ class Entity {
    * Получает информацию о счёте или доходе/расходе
    * (в зависимости от того, что наследуется от Entity)
    * */
-  static get(id = '', data, callback) {
+  static get(id, data, callback) {
     return createRequest({
-      url: this.URL,
+      url: `${this.URL}/${id}`,
       data: data,
       responseType: 'json',
       method: 'GET',
@@ -54,7 +54,7 @@ class Entity {
    * Удаляет информацию о счёте или доходе/расходе
    * (в зависимости от того, что наследуется от Entity)
    * */
-  static remove(id = '', data, callback) {
+  static remove(id, data, callback) {
     data.id = id;
     data._method = 'DELETE';
     return createRequest({

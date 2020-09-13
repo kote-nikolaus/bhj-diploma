@@ -16,7 +16,12 @@ const createRequest = (options = {}) => {
   })
 
   if (options.method === 'GET') {
-    let address = `${options.url}?mail=${options.data.email}&password=${options.data.password}`;
+    let address = `${options.url}?`;
+    for (key in options.data) {
+      let parameter = `${key}=${options.data[key]}&`;
+      address += parameter;
+    }
+    address = address.slice(0, -1);
     try {
       xhr.open('GET', address);
       xhr.send();
@@ -28,8 +33,6 @@ const createRequest = (options = {}) => {
     for (item in options.data) {
       formData.append(String(item), options.data[item]);
     }
-    //formData.append('email', options.data.email);
-    //formData.append('password', options.data.password);
     try {
       xhr.open(options.method, options.url);
       xhr.send(formData);

@@ -17,49 +17,49 @@
       "email": "f@mail.ru",
       "password": "1234",
       "id": "f9o9r4bwgkerrcecu",
-      "isAuthorized": true
+      "isAuthorized": false
     },
     {
       "email": "654@mail.ru",
       "password": "1234",
       "id": "f9o9r4ey0kerrzhnq",
-      "isAuthorized": true
+      "isAuthorized": false
     },
     {
       "email": "error@mail.ru",
       "password": "1234",
       "id": "f9o9r43n0kers4mlq",
-      "isAuthorized": true
+      "isAuthorized": false
     },
     {
       "email": "error1@mail.ru",
       "password": "1234",
       "id": "f9o9r4d90kers5ofh",
-      "isAuthorized": true
+      "isAuthorized": false
     },
     {
       "email": "error2@mail.ru",
       "password": "1234",
       "id": "f9o9r4dckers6vt6",
-      "isAuthorized": true
+      "isAuthorized": false
     },
     {
       "email": "error3@mail.ru",
       "password": "1234",
       "id": "f9o9r43nkkers82hj",
-      "isAuthorized": true
+      "isAuthorized": false
     },
     {
       "email": "error4@mail.ru",
       "password": "1234",
       "id": "f9o9r4b88kers90jm",
-      "isAuthorized": true
+      "isAuthorized": false
     },
     {
       "email": "error5@mail.ru",
       "password": "1234",
       "id": "f9o9r46vckers9ubd",
-      "isAuthorized": true
+      "isAuthorized": false
     },
     {
       "email": "error6@mail.ru",
@@ -215,44 +215,19 @@
       "id": "f9o9r44mokeunq4h3"
     },
     {
-      "name": "dd",
-      "user_id": "f9o9r4498kerr7c3p",
-      "id": "f9o9r42dwkeuns50d"
+      "name": "blah-blah",
+      "user_id": "f9o9r4ey0kerrzhnq",
+      "id": "f9o9r45wgkf0dm6dg"
     },
     {
-      "name": "bank",
-      "user_id": "f9o9r4498kerr7c3p",
-      "id": "f9o9r41sckeunwoau"
+      "name": "myfees",
+      "user_id": "f9o9r4d90kers5ofh",
+      "id": "f9o9r47z0kf0dowkq"
     },
     {
-      "name": "bank",
-      "user_id": "f9o9r4498kerr7c3p",
-      "id": "f9o9r48swkeunxhh6"
-    },
-    {
-      "name": "bank",
-      "user_id": "f9o9r4498kerr7c3p",
-      "id": "f9o9r48askeuo1pvb"
-    },
-    {
-      "name": "bas",
-      "user_id": "f9o9r4498kerr7c3p",
-      "id": "f9o9r4458keuo64n8"
-    },
-    {
-      "name": "vgf",
-      "user_id": "f9o9r4498kerr7c3p",
-      "id": "f9o9r450gkeuob6du"
-    },
-    {
-      "name": "wdd",
-      "user_id": "f9o9r4498kerr7c3p",
-      "id": "f9o9r41qckeuoeaio"
-    },
-    {
-      "name": "ddc",
-      "user_id": "f9o9r4498kerr7c3p",
-      "id": "f9o9r498okevuzu7j"
+      "name": "blah-blah",
+      "user_id": "f9o9r4b88kers90jm",
+      "id": "f9o9r4awkkf0eg8or"
     }
   ],
   "transactions": [
@@ -392,20 +367,44 @@
       "user_id": "1"
     },
     {
-      "id": "f9o9r45qgkexbtg2l",
+      "id": "f9o9r4awokf0dbor6",
       "type": "INCOME",
-      "name": "зарплата",
-      "sum": 25000,
+      "name": "salary3",
+      "sum": 300,
       "account_id": "f9o9r4ekgkeunpzbx",
-      "created_at": "2020-09-10T21:31:08.060Z"
+      "created_at": "2020-09-13T00:36:37.265Z"
     },
     {
-      "id": "f9o9r494skexbtucz",
+      "id": "f9o9r4a60kf0dmyof",
+      "type": "INCOME",
+      "name": "salary5",
+      "sum": 400,
+      "account_id": "f9o9r45wgkf0dm6dg",
+      "created_at": "2020-09-13T00:45:23.343Z"
+    },
+    {
+      "id": "f9o9r48ngkf0dp4t7",
       "type": "EXPENSE",
-      "name": "еда",
-      "sum": 3000,
-      "account_id": "f9o9r4ekgkeunpzbx",
-      "created_at": "2020-09-10T21:31:26.578Z"
+      "name": "fee",
+      "sum": 500,
+      "account_id": "f9o9r47z0kf0dowkq",
+      "created_at": "2020-09-13T00:47:04.602Z"
+    },
+    {
+      "id": "f9o9r47u4kf0e915i",
+      "type": "INCOME",
+      "name": "salary",
+      "sum": 100,
+      "account_id": "f9o9r44mokeunq4h3",
+      "created_at": "2020-09-13T01:02:32.981Z"
+    },
+    {
+      "id": "f9o9r44mskf0egkzi",
+      "type": "INCOME",
+      "name": "salary",
+      "sum": 100,
+      "account_id": "f9o9r4awkkf0eg8or",
+      "created_at": "2020-09-13T01:08:25.277Z"
     }
   ]
 }

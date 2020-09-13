@@ -66,8 +66,9 @@ class AccountsWidget {
    * */
   clear() {
     let accounts = Array.from(document.getElementsByClassName('account'));
-    for (let account of accounts) {
-      account.remove();
+
+    for (let i = 0; i < accounts.length; i++) {
+      accounts[i].remove();
     }
   }
 

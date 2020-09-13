@@ -24,7 +24,7 @@ class TransactionsPage {
    * Вызывает метод render для отрисовки страницы
    * */
   update() {
-    this.render();
+    this.render(this.lastOptions);
   }
 
   /**
@@ -36,12 +36,6 @@ class TransactionsPage {
   registerEvents() {
     let removeAccountButton = document.getElementsByClassName('remove-account').item(0);
     removeAccountButton.addEventListener('click', e => this.removeAccount(e));
-
-    let that = this;
-    let removeTransactionButton = document.getElementsByClassName('transaction__remove').item(0);
-    if (removeTransactionButton) {
-      removeTransactionButton.addEventListener('click', function(e) {that.removeTransaction(this.element.dataset.id)});
-    }
   }
 
   /**
@@ -53,10 +47,10 @@ class TransactionsPage {
    * для обновления приложения
    * */
   removeAccount() {
-    if (lastOptions) {
+    if (this.lastOptions) {
       let result = confirm('Вы действительно хотите удалить счёт?');
       if (result) {
-        Account.remove(lastOptions, function(err, response) {
+        Account.remove(this.lastOptions.account_id, this.lastOptions, function(err, response) {
           if (response.success) {
             App.update();
           }
@@ -73,7 +67,7 @@ class TransactionsPage {
   removeTransaction(id) {
     let result = confirm('Вы действительно хотите удалить эту транзакцию?');
     if (result) {
-      Transaction.remove(id, function(err, response) {
+      Transaction.remove(id, {}, function(err, response) {
         if (response.success) {
           App.update();
         }
@@ -88,20 +82,17 @@ class TransactionsPage {
    * в TransactionsPage.renderTransactions()
    * */
   render(options) {
-    if (!options) {
-      const renderItemError = new Error('Данные об аккаунте отсутствуют');
-      throw renderError;
-    } else {
+    if (options) {
       this.lastOptions = options;
       let that = this;
-      Account.get(options.account_id, function(err, response) {
+      Account.get(options.account_id, options.data, function(err, response) {
         if (response.success) {
-          that.renderTitle(options.account_id);
+          that.renderTitle(response.data.name);
         }
       });
-      Transaction.list(options.account_id, function(err, response) {
+      Transaction.list(options, function(err, response) {
         if (response.success) {
-          that.renderTransactions(options.account_id);
+          that.renderTransactions(response.data);
         }
       });
     }
@@ -117,7 +108,7 @@ class TransactionsPage {
     this.renderTransactions(data);
     let name = 'Название счета'
     this.renderTitle(name);
-    this.lastOptions = '';
+    this.lastOptions = undefined;
   }
 
   /**
@@ -134,14 +125,14 @@ class TransactionsPage {
    * */
   formatDate(date) {
     let newDate = new Date(date);
-    let day = newDate.getDay();
+    let day = newDate.getDate();
     let months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
     let month = months[newDate.getMonth()];
     let year = newDate.getFullYear();
 
     function addZero(time) {
       if (time < 10) {
-        time = "0" + i;
+        time = "0" + time;
       }
       return time;
     }
@@ -159,7 +150,7 @@ class TransactionsPage {
   getTransactionHTML(item) {
     let newTransaction = document.createElement('div');
     newTransaction.className = `transaction transaction_${item.type} row`;
-    let date = this.formatDate(item.date);
+    let date = this.formatDate(item.created_at);
 
     newTransaction.innerHTML = `<div class="col-md-7 transaction__details">
       <div class="transaction__icon">
@@ -178,6 +169,7 @@ class TransactionsPage {
             <i class="fa fa-trash"></i>
         </button>
     </div>`
+    return newTransaction;
   }
 
   /**
@@ -187,9 +179,17 @@ class TransactionsPage {
   renderTransactions(data) {
     let that = this;
     let transactionsList = document.getElementsByClassName('content').item(0);
+    transactionsList.innerHTML = '';
+
     for (let i = 0; i < data.length; i++) {
       let transaction = that.getTransactionHTML(data[i]);
       transactionsList.appendChild(transaction);
+    }
+
+    let removeTransactionButtons = Array.from(document.getElementsByClassName('transaction__remove'));
+    if (removeTransactionButtons) {
+      for (let i = 0; i < removeTransactionButtons.length; i++)
+        removeTransactionButtons[i].addEventListener('click', function(e) {that.removeTransaction(data[i].id)});
     }
   }
 }
