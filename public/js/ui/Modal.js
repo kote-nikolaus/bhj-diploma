@@ -14,12 +14,10 @@ class Modal {
    * */
   constructor(element) {
     if (!element) {
-      const constructorError = new Error('Конструктор пуст');
-      throw constructorError;
-    } else {
-      this.element = element;
-      this.registerEvents();
+      throw new Error('Виджет отсутствует');
     }
+    this.element = element;
+    this.registerEvents();
   }
 
   /**

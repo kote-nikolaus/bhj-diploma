@@ -12,11 +12,9 @@ class UserWidget {
    * */
   constructor( element ) {
     if (!element) {
-      const constructorError = new Error('Конструктор пуст');
-      throw constructorError;
-    } else {
-      this.element = element;
+      throw new Error('Виджет отсутствует');
     }
+    this.element = element;
   }
 
   /**
@@ -27,8 +25,10 @@ class UserWidget {
    * авторизованного пользователя
    * */
   update() {
-    let name = User.current();
-    let nameContainer = document.getElementsByClassName('user-name').item(0);
-    nameContainer.innerText = name.email;
+    if (User.current()) {
+      let user = User.current();
+      let nameContainer = document.getElementsByClassName('user-name').item(0);
+      nameContainer.innerText = user.name;
+    }
   }
 }

@@ -26,11 +26,9 @@ class User {
    * из локального хранилища
    * */
   static current() {
-    try {
+    if (localStorage.getItem('user') && localStorage.user) {
       let user = localStorage.user;
       return JSON.parse(user);
-    } catch (e) {
-      return undefined;
     }
   }
 
@@ -70,7 +68,7 @@ class User {
       method: 'POST',
       callback: function(err, response) {
         if (response && response.user) {
-          User.setCurrent(data);
+          User.setCurrent(response.user);
 
         }
         callback(err, response);
@@ -93,7 +91,7 @@ class User {
       method: 'POST',
       callback: function(err, response) {
         if (response && response.user) {
-          User.setCurrent(data);
+          User.setCurrent(response.user);
         }
         callback(err, response);
       }

@@ -10,14 +10,12 @@ class TransactionsPage {
    * Сохраняет переданный элемент и регистрирует события
    * через registerEvents()
    * */
-  constructor( element ) {
+  constructor(element) {
     if (!element) {
-      const constructorError = new Error('Конструктор пуст');
-      throw constructorError;
-    } else {
-      this.element = element;
-      this.registerEvents();
+      throw new Error('Виджет отсутствует');
     }
+    this.element = element;
+    this.registerEvents();
   }
 
   /**
@@ -36,6 +34,8 @@ class TransactionsPage {
   registerEvents() {
     let removeAccountButton = document.getElementsByClassName('remove-account').item(0);
     removeAccountButton.addEventListener('click', e => this.removeAccount(e));
+
+    this.element.addEventListener('click', e => this.removeTransaction(e.target.dataset.id));
   }
 
   /**
@@ -65,13 +65,16 @@ class TransactionsPage {
    * По удалению транзакции вызовите метод App.update()
    * */
   removeTransaction(id) {
-    let result = confirm('Вы действительно хотите удалить эту транзакцию?');
-    if (result) {
-      Transaction.remove(id, {}, function(err, response) {
-        if (response.success) {
-          App.update();
-        }
-      })
+    let button = document.querySelector(`[data-id=${id}]`);
+    if (button) {
+      let result = confirm('Вы действительно хотите удалить эту транзакцию?');
+      if (result) {
+        Transaction.remove(id, {}, function(err, response) {
+          if (response.success) {
+            App.update();
+          }
+        })
+      }
     }
   }
 
@@ -84,15 +87,14 @@ class TransactionsPage {
   render(options) {
     if (options) {
       this.lastOptions = options;
-      let that = this;
-      Account.get(options.account_id, options.data, function(err, response) {
+      Account.get(options.account_id, options.data, (err, response) => {
         if (response.success) {
-          that.renderTitle(response.data.name);
+          this.renderTitle(response.data.name);
         }
       });
-      Transaction.list(options, function(err, response) {
+      Transaction.list(options, (err, response) => {
         if (response.success) {
-          that.renderTransactions(response.data);
+          this.renderTransactions(response.data);
         }
       });
     }
@@ -108,7 +110,7 @@ class TransactionsPage {
     this.renderTransactions(data);
     let name = 'Название счета'
     this.renderTitle(name);
-    this.lastOptions = undefined;
+    this.lastOptions = null;
   }
 
   /**
@@ -177,19 +179,12 @@ class TransactionsPage {
    * используя getTransactionHTML
    * */
   renderTransactions(data) {
-    let that = this;
     let transactionsList = document.getElementsByClassName('content').item(0);
     transactionsList.innerHTML = '';
 
     for (let i = 0; i < data.length; i++) {
-      let transaction = that.getTransactionHTML(data[i]);
+      let transaction = this.getTransactionHTML(data[i]);
       transactionsList.appendChild(transaction);
-    }
-
-    let removeTransactionButtons = Array.from(document.getElementsByClassName('transaction__remove'));
-    if (removeTransactionButtons) {
-      for (let i = 0; i < removeTransactionButtons.length; i++)
-        removeTransactionButtons[i].addEventListener('click', function(e) {that.removeTransaction(data[i].id)});
     }
   }
 }

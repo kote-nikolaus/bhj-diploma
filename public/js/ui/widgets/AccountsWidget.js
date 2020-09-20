@@ -14,13 +14,11 @@ class AccountsWidget {
    * */
   constructor(element) {
     if (!element) {
-      const constructorError = new Error('Конструктор пуст');
-      throw constructorError;
-    } else {
-      this.element = element;
-      this.update();
-      this.registerEvents();
+      throw new Error('Виджет отсутствует');
     }
+    this.element = element;
+    this.update();
+    this.registerEvents();
   }
 
   /**
@@ -35,6 +33,8 @@ class AccountsWidget {
     createAccountButton.addEventListener('click', function() {
       App.getModal('createAccount').open();
     });
+
+    this.element.addEventListener('click', e => this.onSelectAccount(e.target.closest('.account')));
   }
 
   /**
@@ -48,12 +48,13 @@ class AccountsWidget {
    * метода renderItem()
    * */
   update() {
-    let that = this;
-    if (User.current() !== undefined) {
-      Account.list(User.current(), function(err, response) {
+    if (User.current()) {
+      Account.list({}, (err, response) => {
         if (response.success) {
-          that.clear();
-          that.renderItem(response.data);
+          this.clear();
+          for (let i = 0; i < response.data.length; i++) {
+            this.renderItem(response.data[i]);
+          }
         }
       })
     }
@@ -112,15 +113,6 @@ class AccountsWidget {
    * и добавляет его внутрь элемента виджета
    * */
   renderItem(item) {
-    for (let i = 0; i < item.length; i++) {
-      this.element.appendChild(this.getAccountHTML(item[i]));
-    }
-
-    let accounts = Array.from(document.getElementsByClassName('account'));
-    for (let i = 0; i < accounts.length; i++) {
-      let that = this;
-      accounts[i].addEventListener('click', function(e) {that.onSelectAccount(this)});
-    };
-
+      this.element.appendChild(this.getAccountHTML(item));
   }
 }

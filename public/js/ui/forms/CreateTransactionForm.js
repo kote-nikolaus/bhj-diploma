@@ -19,10 +19,10 @@ class CreateTransactionForm extends AsyncForm {
    * */
   renderAccountsList() {
     if (User.current() !== undefined) {
-      let that = this;
-      Account.list(User.current(), function(err, response) {
+      Account.list(User.current(), (err, response) => {
         if (response.success) {
-          let accountsList = that.element.closest('.modal').querySelector('.accounts-select');
+          let accountsList = this.element.closest('.modal').querySelector('.accounts-select');
+          accountsList.innerHTML = '';
           for (let i = 0; i < response.data.length; i++) {
           let account = document.createElement('option');
             account.value = response.data[i].id;
@@ -41,11 +41,10 @@ class CreateTransactionForm extends AsyncForm {
    * в котором находится форма
    * */
   onSubmit(options) {
-    let that = this;
-    Transaction.create(options.data, function(err, response) {
+    Transaction.create(options, (err, response) => {
       if (response.success) {
-        that.element.reset();
-        let modalName = that.element.closest("[class='modal fade in']").dataset.modalId;
+        this.element.reset();
+        let modalName = this.element.closest("[class='modal fade in']").dataset.modalId;
         App.getModal(modalName).close();
         App.update();
       }

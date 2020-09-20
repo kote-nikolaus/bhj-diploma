@@ -14,12 +14,10 @@ class AsyncForm {
    * */
   constructor(element) {
     if (!element) {
-      const constructorError = new Error('Конструктор пуст');
-      throw constructorError;
-    } else {
-      this.element = element;
-      this.registerEvents();
+      throw new Error('Виджет отсутствует');
     }
+    this.element = element;
+    this.registerEvents();
   }
 
   /**
@@ -62,7 +60,7 @@ class AsyncForm {
    * данные, полученные из метода getData()
    * */
   submit() {
-    let data = {data: this.getData()};
+    let data = this.getData();
     this.onSubmit(data);
   }
 }

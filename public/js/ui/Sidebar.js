@@ -34,13 +34,11 @@ class Sidebar {
     let signUpButton = document.getElementsByClassName('menu-item_register').item(0);
     signUpButton.addEventListener('click', function() {
       App.getModal('register').open();
-      return false;
     });
 
     let signInButton = document.getElementsByClassName('menu-item_login').item(0);
     signInButton.addEventListener('click', function() {
       App.getModal('login').open();
-      return false;
     });
 
     let logoutButton = document.getElementsByClassName('menu-item_logout').item(0);
@@ -50,7 +48,6 @@ class Sidebar {
           App.setState('init');
         }
       });
-      return false;
     });
   }
 
