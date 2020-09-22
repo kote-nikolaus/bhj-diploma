@@ -81,16 +81,18 @@ class AccountsWidget {
    * Вызывает App.showPage( 'transactions', { account_id: id_счёта });
    * */
   onSelectAccount(element) {
-    let activeAccount = document.getElementsByClassName('active').item(0);
-    if (element.classList.contains('active')) {
-      element.classList.remove('active');
-    } else {
-      if (activeAccount) {
-        activeAccount.classList.remove('active');
+    if (element !== null) {
+      let activeAccount = document.getElementsByClassName('active').item(0);
+      if (element.classList.contains('active')) {
+        element.classList.remove('active');
+      } else {
+        if (activeAccount) {
+          activeAccount.classList.remove('active');
+        }
+        element.classList.add('active');
       }
-      element.classList.add('active');
+      App.showPage('transactions', {account_id: element.dataset.id});
     }
-    App.showPage('transactions', {account_id: element.dataset.id});
   }
 
   /**
